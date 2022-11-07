@@ -4,9 +4,9 @@ import com.zerobase.dividend.model.Company;
 import com.zerobase.dividend.model.Dividend;
 import com.zerobase.dividend.model.ScrapedResult;
 import com.zerobase.dividend.persist.entity.CompanyEntity;
-import com.zerobase.dividend.persist.entity.CompanyRepository;
+import com.zerobase.dividend.persist.CompanyRepository;
 import com.zerobase.dividend.persist.entity.DividendEntity;
-import com.zerobase.dividend.persist.entity.DividendRepository;
+import com.zerobase.dividend.persist.DividendRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
