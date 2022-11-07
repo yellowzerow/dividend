@@ -21,7 +21,12 @@ public class CompanyController {
     public ResponseEntity<?> autocomplete(
             @RequestParam String keyword
     ) {
-        return null;
+        //Trie 를 사용한 자동완성 기능
+        //var result = this.companyService.autocomplete(keyword);
+        // DB Like 연산을 이용한 자동완성 기능
+        var result = this.companyService.getCompanyNameByKeyword(keyword);
+
+        return ResponseEntity.ok(result);
     }
 
     @GetMapping
@@ -43,6 +48,8 @@ public class CompanyController {
         }
 
         Company company = this.companyService.save(ticker);
+
+        this.companyService.addAutocompleteKeyword(company.getName());
 
         return ResponseEntity.ok(company);
     }
