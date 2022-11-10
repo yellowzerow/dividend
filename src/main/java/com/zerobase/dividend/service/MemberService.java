@@ -22,14 +22,14 @@ public class MemberService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        return this.memberRepository.findByUserName(username)
+        return this.memberRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("couldn't find user -> " + username));
 
     }
 
     /*회원가입하기*/
     public MemberEntity register(Auth.SignUp member) {
-        boolean exists = this.memberRepository.existsByUserName(member.getUserName());
+        boolean exists = this.memberRepository.existsByUsername(member.getUsername());
         if (exists) {
             throw new RuntimeException("이미 사용 중인 아이디 입니다.");
         }
@@ -41,6 +41,13 @@ public class MemberService implements UserDetailsService {
 
     /*인증하기*/
     public MemberEntity authenticate(Auth.SignIn member) {
-        return null;
+        MemberEntity user = this.memberRepository.findByUsername(member.getUsername())
+                .orElseThrow(() -> new RuntimeException("존재하지 않는 ID 입니다."));
+
+        if (!this.passwordEncoder.matches(member.getPassword(), user.getPassword())) {
+            throw new RuntimeException("비밀번호가 일치하지 않습니다.");
+        }
+
+        return user;
     }
 }
