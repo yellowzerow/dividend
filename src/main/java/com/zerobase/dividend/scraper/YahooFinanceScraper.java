@@ -4,6 +4,7 @@ import com.zerobase.dividend.model.Company;
 import com.zerobase.dividend.model.Dividend;
 import com.zerobase.dividend.model.ScrapedResult;
 import com.zerobase.dividend.model.constants.Month;
+import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -16,6 +17,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Component
 public class YahooFinanceScraper implements Scraper{
 
@@ -87,7 +89,7 @@ public class YahooFinanceScraper implements Scraper{
             return new Company(ticker, title);
 
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("scrap company by ticker error -> " + e);
         }
 
         return null;
